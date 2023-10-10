@@ -7,6 +7,9 @@ const displayHamburgerMenu = document.querySelector('.mobile-menu');
 const shoppingCart = document.querySelector('.navbar-shopping-cart');
 const shoppingCardList = document.querySelector('#shoppingCardList');
 
+const modalProductDetail = document.querySelector('#modalProductDetail')
+const productDetailClose = document.querySelector('#productDetail-close')
+
 const cardsContainer = document.querySelector('.cards-container');
 
 
@@ -16,9 +19,12 @@ menuEmail.addEventListener('click', toggleDesktopMenu);
 hamburgerMenu.addEventListener('click', toggleMobileMenu);
 //Will make appear the shopping list
 shoppingCart.addEventListener('click', toggleShoppingCardList);
+//close Modal Product Detail
+modalProductDetail.addEventListener('click',closeProductDetail);
 
 function toggleDesktopMenu(){
     const  isShoppingCardListOpen = !shoppingCardList.classList.contains('inactive');
+    modalProductDetail.classList.add('inactive');
     if(isShoppingCardListOpen){
         shoppingCardList.classList.add('inactive');
     }
@@ -27,6 +33,7 @@ function toggleDesktopMenu(){
 
 function toggleMobileMenu(){
     const  isShoppingCardListOpen = !shoppingCardList.classList.contains('inactive');
+    modalProductDetail.classList.add('inactive');
     if(isShoppingCardListOpen){
         shoppingCardList.classList.add('inactive');
     }
@@ -36,7 +43,8 @@ function toggleMobileMenu(){
 function toggleShoppingCardList(){
     const isMobileMenuOpen = !displayHamburgerMenu.classList.contains('inactive');
     const isDesktopMenuOpen = !desktopMenu.classList.contains('inactive');
-    
+    modalProductDetail.classList.add('inactive');
+
     if(isMobileMenuOpen){
         displayHamburgerMenu.classList.add('inactive');
     }
@@ -46,7 +54,43 @@ function toggleShoppingCardList(){
     shoppingCardList.classList.toggle('inactive');
 }
 
+function openModalProductDetail(){
+    const isMobileMenuOpen = !displayHamburgerMenu.classList.contains('inactive');
+    const isDesktopMenuOpen = !desktopMenu.classList.contains('inactive');
+    const  isShoppingCardListOpen = !shoppingCardList.classList.contains('inactive');
+    
+    if(isMobileMenuOpen){
+        displayHamburgerMenu.classList.add('inactive');
+    }
+    if(isDesktopMenuOpen){
+        desktopMenu.classList.add('inactive');
+    }
+    if(isShoppingCardListOpen){
+        shoppingCardList.classList.add('inactive');
+    }  
+    modalProductDetail.classList.remove('inactive')
+}
+
+function closeProductDetail(){
+    modalProductDetail.classList.add('inactive');
+}
+
 const productList = [];
+productList.push({
+    name: 'Bike',
+    price: 120,
+    image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+});
+productList.push({
+    name: 'Pantalla',
+    price: 2000,
+    image: 'https://megustalomejor.com/wp-content/uploads/LG-50-Inches-4K-Ultra-HD-Intel-1.jpg'
+});
+productList.push({
+    name: 'Croquetas',
+    price: 120,
+    image: 'https://i5.walmartimages.com.mx/mg/gm/3pp/asr/e6519369-0ce8-49c1-a57b-1ad40c2ee3fd.ef6ade9faac3b9947217d15cbd75a715.png?odnHeight=612&odnWidth=612&odnBg=FFFFFF'
+});
 productList.push({
     name: 'Bike',
     price: 120,
@@ -85,6 +129,9 @@ function renderProducts(arr){
      
         const productImg = document.createElement('img');
          productImg.setAttribute('src', product.image);
+         productImg.addEventListener('click',openModalProductDetail);
+
+
      
          const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
